@@ -10,8 +10,7 @@ import org.springframework.http.*;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class JokesApiApplicationTests
@@ -103,5 +102,34 @@ class JokesApiApplicationTests
         request = new HttpEntity(headers);
         response = rest.exchange(endpoint, HttpMethod.GET, request, Joke.class);
         assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    public void getMissingJokeById()
+    {
+        String endpoint = "http://localhost:" + port + "/jokes/6000";
+
+        //set JSON header
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity request = new HttpEntity(headers);
+        ResponseEntity<Joke> response = rest.exchange(endpoint, HttpMethod.GET, request, Joke.class);
+        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    public void getJokeById()
+    {
+        String endpoint = "http://localhost:" + port + "/jokes/3";
+
+        //set JSON header
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity request = new HttpEntity(headers);
+        ResponseEntity<Joke> response = rest.exchange(endpoint, HttpMethod.GET, request, Joke.class);
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertNotNull(response.getBody().getJokeText());
     }
 }
