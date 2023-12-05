@@ -122,7 +122,7 @@ class JokesApiApplicationTests
     @Test
     public void getJokeById()
     {
-        String endpoint = "http://localhost:" + port + "/jokes/3";
+        String endpoint = "http://localhost:" + port + "/jokes";
 
         //set JSON header
         HttpHeaders headers = new HttpHeaders();
