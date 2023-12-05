@@ -18,6 +18,7 @@ class JokesApiApplicationTests
     @LocalServerPort
     private int port;
 
+
     @Autowired
     private TestRestTemplate rest;
 
